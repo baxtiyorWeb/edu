@@ -32,7 +32,7 @@ export class FilesController {
     }),
   )
   async uploadVideo(@UploadedFile() file: Files) {
-    const serverUrl = `http://localhost:3000`;
+    const serverUrl = `https://edu-2.onrender.com`;
     const fileUrl = `${serverUrl}/files/${file.filename}`;
     const savedVideo = await this.filesService.uploadFile(
       file.filename,
@@ -42,6 +42,10 @@ export class FilesController {
 
     return {
       file: savedVideo,
+      id: file.id,
+      url: file.fileUrl,
+      name: file.filename,
+      path: file.path,
     };
   }
 
