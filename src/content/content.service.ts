@@ -22,7 +22,7 @@ export class ContentService {
   // create content video
 
   async createContent(content: ContentDto): Promise<Content> {
-    const category = await this.categoriesRepository.find({
+    const category = await this.categoriesRepository.findOne({
       where: { id: 2 },
     });
 
