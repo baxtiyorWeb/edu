@@ -5,18 +5,27 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { FilesModule } from './files/files.module';
 import { ContentModule } from './content/content.module';
 import { CategoriesModule } from './categories/categories.module';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'test_zept_user',
-      password: '9GTBTLZAUXYP1okY9VfhPv5Efbh1Bp31',
-      database: 'test_zept',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // Set to false in production
+    ConfigModule.forRoot({ isGlobal: true }), // Ensure this line is present
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: +configService.get<number>('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }),
+
+      inject: [ConfigService],
     }),
     FilesModule,
     ContentModule,
