@@ -20,6 +20,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.useStaticAssets(join(__dirname, '..', 'uploads'));
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();

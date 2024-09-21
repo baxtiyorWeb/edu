@@ -12,8 +12,9 @@ import { CategoriesModule } from './categories/categories.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',
-      password: '1234',
+      username: 'test_zept_user',
+      password: '9GTBTLZAUXYP1okY9VfhPv5Efbh1Bp31',
+      database: 'test_zept',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // Set to false in production
     }),
